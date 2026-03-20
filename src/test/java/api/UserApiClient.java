@@ -12,7 +12,9 @@ import java.net.http.HttpResponse;
 public class UserApiClient {
 
     private static final HttpClient client = HttpClient.newHttpClient();
-    private static final String apiKey = Dotenv.load().get("REQRES_API_KEY");
+    private static final String apiKey = System.getenv("REQRES_API_KEY") != null
+            ? System.getenv("REQRES_API_KEY")
+            : Dotenv.load().get("REQRES_API_KEY");
 
     public static String createUser(String name, String job) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
