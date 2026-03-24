@@ -28,7 +28,7 @@ public class E2ETest {
     @Story("getUser")
     public void testGetUser() throws IOException, InterruptedException {
         var usrName = UserApiClient.getUser(2);
-        if(usrName == null || usrName.isEmpty())
+        if(usrName.isEmpty())
             Assert.fail();
         Assert.assertEquals(usrName, "Janet Weaver");
     }

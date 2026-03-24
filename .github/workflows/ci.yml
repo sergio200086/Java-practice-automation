@@ -9,13 +9,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Install Google Chrome
-        run: |
-          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
-
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -25,9 +18,16 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: Start Selenium Grid
+        run: docker-compose up -d
+
+      - name: Wait for Grid
+        run: sleep 10
+
       - name: Run tests
         env:
           REQRES_API_KEY: ${{ secrets.REQRES_API_KEY }}
+          SELENIUM_GRID_URL: http://localhost:4444
         run: mvn clean test
 
       - name: Upload Allure Results

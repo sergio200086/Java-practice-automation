@@ -8,13 +8,16 @@ import org.openqa.selenium.WebDriver;
 import pages.LoginPage;
 import utils.DriverManager;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+
 public class LoginTest {
 
     public DriverManager driverManager;
     public WebDriver driver;
 
     @BeforeMethod
-    public void setUp(){
+    public void setUp() throws URISyntaxException, MalformedURLException {
         driverManager = new DriverManager("https://the-internet.herokuapp.com/login");
         driver = driverManager.getWebDriver();
         driver.manage().window().maximize();
