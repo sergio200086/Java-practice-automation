@@ -1,5 +1,6 @@
 package utils;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -15,8 +16,9 @@ public class DriverManager {
 
     public DriverManager(String url) throws URISyntaxException, MalformedURLException {
         ChromeOptions options = new ChromeOptions();
-        String gridUrl = System.getenv("SELENIUM_GRID_URL");
+        String gridUrl = System.getenv("SELENIUM_GRID_URL") != null ? System.getenv("SELENIUM_GRID_URL") : Dotenv.load().get("SELENIUM_GRID_URL");
         if (gridUrl != null){
+            gridUrl = gridUrl.replaceAll("\\s+", "");
             this.webDriver = new RemoteWebDriver(new URI(gridUrl).toURL(), options);
         }
         else{

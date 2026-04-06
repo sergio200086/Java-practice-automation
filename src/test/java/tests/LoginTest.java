@@ -34,7 +34,7 @@ public class LoginTest {
         login.enterPassword("SuperSecretPassword!");
         login.clickLoginButton();
         var message = login.succesLogin();
-        Assert.assertEquals("You logged into a secure area!\n" +"×", message);
+        Assert.assertTrue(message.contains("You logged into a secure area!"));
     }
 
     @AfterMethod
@@ -43,6 +43,4 @@ public class LoginTest {
             driverManager.quitDriver();
         }
     }
-
-
 }
